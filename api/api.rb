@@ -1,12 +1,15 @@
 require "grape"
+require "sequel"
 
 module Kodable
 
   class API < Grape::API
 
+    prefix "api"
+    format :json
+
     get :people do
-      # open db connection
-      # pass db as source to User.fetch TODO: adjust source interaction
+      { :people => Person.all.map { |p| { :id => p.id, :name => p.name } } }
     end
 
     get :consumptions do

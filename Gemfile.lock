@@ -32,9 +32,11 @@ GEM
     mustermann (1.0.3)
     mustermann-grape (1.0.0)
       mustermann (~> 1.0.0)
+    pg (1.1.4)
     rack (2.0.6)
     rack-accept (0.4.5)
       rack (>= 0.4)
+    rake (12.3.2)
     rspec (3.8.0)
       rspec-core (~> 3.8.0)
       rspec-expectations (~> 3.8.0)
@@ -63,7 +65,9 @@ PLATFORMS
 
 DEPENDENCIES
   grape
+  pg
   rack
+  rake
   rspec
   sequel
 

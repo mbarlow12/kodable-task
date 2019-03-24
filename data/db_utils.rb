@@ -14,37 +14,15 @@ module Connection
 
   def self.check
     begin
-      Sequel.postgres(self.config) do |db|
-
-      end
+      Sequel.postgres(self.config) { |db| }
     rescue Sequel::Error => e
-      puts e.message
+      return false
     end
-  end
-end
-
-module Db
-
-  def self.init(cfg)
-    Sequel.postgres(cfg) do |db|
-      db.create_table?(:people) do
-        primary_key :id
-        String :name, :unique => true
-      end
-
-      db.create_table?(:pizzas) do
-        primary_key :id
-        String :type
-        foreign_key :person_id, :people
-        DateTime :eaten_at
-      end
-    end
+    return true
   end
 
-  def self.load_from_file(path)
-    csv = CSV.read(path, :headers => true)
-    csv.map { |row|
-
-    }
+  def self.clean_db(db)
+    db.drop_table(:pizzas)
+    db.drop_table(:people)
   end
 end

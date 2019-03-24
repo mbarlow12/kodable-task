@@ -1,5 +1,6 @@
 require "grape"
 require "sequel"
+require "Controllers"
 
 module Kodable
 
@@ -9,18 +10,22 @@ module Kodable
     format :json
 
     get :people do
-      { :people => Person.all.map { |p| { :id => p.id, :name => p.name } } }
+      { :people => Controllers::get_all_people.map { |p| { :id => p.id, :name => p.name } } }
     end
 
     get :consumptions do
+      { :consumptions => Controllers::get_all_consumptions }
     end
 
     get :streaks do
+      { :streaks => Controllers.get_streaks }
     end
 
-    namespace :max do
-      params do
-
+    resource :max do
+      route_param :month do
+        get do
+          Controllers::get_month_max(params[:month].downcase)
+        end
       end
     end
 
